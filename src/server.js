@@ -8,10 +8,10 @@ const session = require('express-session')
 const passport = require('passport')
 
 
-//inititializations
+// inititializations
 const app = express()
 
-//settings
+// settings
 app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
 app.engine('hbs', exphbs({
@@ -22,14 +22,28 @@ app.engine('hbs', exphbs({
 }))
 app.set('view engine', '.hbs')
 
-//middlewars
+// middlewars
+app.use(express.urlencoded({extended: false}))
+app.use(morgan('dev'))
+app.use(methodOverride('_method'))
+// app.use(session({
+//     secret: 'secret',
+//     resave: true,
+//     saveUninitialized: true
+// }))
+// app.use(passport.initialize())
+// app.use(passport.session())
+app.use(flash())
 
 //gloval variables
+app.use((req, res, next) => {
+    //ejemplo
+    //res.locals.success_msg = req.flash('seccess_msg')
+    next()
+})
 
 //routes
-app.get('/', (req , res) => {
-    res.send('hola mundo')
-})
+app.use(require('./routes/index.routes'))
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
