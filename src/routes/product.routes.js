@@ -1,13 +1,13 @@
 const { Router } = require('express')
 const {
-    newProduct,
+    formProduct,
     createNewProduct,
     editProduct,
     endEditProduct
 } = require('../controllers/product.controller')
 const router = Router()
 
-router.get('/new-product', newProduct)
+router.get('/new-product', formProduct)
 
 router.post('/new-product', createNewProduct)
 
