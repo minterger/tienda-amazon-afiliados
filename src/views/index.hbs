@@ -8,7 +8,13 @@
                 <p>{{description}}</p>
                 <a href="#" class="btn btn-primary">Buy ${{price}}</a>
             </div>
-            <div class="card-footer text-muted"></div>
+            <div class="card-footer text-muted d-flex justify-content-between align-content-center">
+                <form action="/delete-product/{{_id}}?_method=delete" method="POST">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+                <a class="btn btn-outline-success btn-sm" href="/edit-product/{{_id}}"><i class='bx bx-edit'></i></a>
+            </div>
         </div>
     </div>
     {{/each}}

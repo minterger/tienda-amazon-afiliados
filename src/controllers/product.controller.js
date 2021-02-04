@@ -14,12 +14,20 @@ productCtrl.createNewProduct = async (req, res) => {
     res.redirect('/')
 }
 
-productCtrl.editProduct = (req, res) => {
-    res.render('products/edit-product')
+productCtrl.editProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id).lean()
+    res.render('products/edit-product', { product })
 }
 
-productCtrl.endEditProduct = (req, res) => {
-    res.send('producto editado')
+productCtrl.endEditProduct = async (req, res) => {
+    const { product_name, img_link, description, price } = req.body
+    await Product.findByIdAndUpdate(req.params.id, { product_name, img_link, description, price })
+    res.redirect('/')
+}
+
+productCtrl.deleteProduct = async (req, res) => {
+    await Product.findByIdAndRemove(req.params.id)
+    res.redirect('/')
 }
 
 module.exports = productCtrl
