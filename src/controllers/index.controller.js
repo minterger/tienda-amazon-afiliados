@@ -1,10 +1,10 @@
-const Product = require('../models/Product')
+const Category = require('../models/Category')
 
 const indexCtrl = {}
 
 indexCtrl.renderIndex = async (req, res) => {
-    const products = await Product.find().lean()
-    res.render('index', { products })
+    const category = await Category.find().lean()
+    res.render('index', { category })
 }
 
 module.exports = indexCtrl

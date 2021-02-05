@@ -1,31 +1,15 @@
 <div class="row">
-    {{#each products}}
+    {{#each category}}
     <div class="col-md-3">
         <div class="card mb-3">
-            <img src="{{img_link}}" class="card-img-top" alt="...">
+            <img src="{{img_category}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h4 class="card-title">{{product_name}}</h4>
-                <p>{{description}}</p>
-                <a href="#" class="btn btn-primary">Buy ${{price}}</a>
-            </div>
-            <div class="card-footer text-muted d-flex justify-content-between align-content-center">
-                <form action="/delete-product/{{_id}}?_method=delete" method="POST">
-                    <input type="hidden" name="_method" value="delete">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
-                <a class="btn btn-outline-success btn-sm" href="/edit-product/{{_id}}"><i class='bx bx-edit'></i></a>
+                    <h4 class="card-title d-flex justify-content-center mb-3">{{categoryName}}</h4>
+                    <div class="d-grid gap-2">
+                        <a href="/{{category}}" class="btn btn-primary">ver</a>
+                    </div>
             </div>
         </div>
     </div>
     {{/each}}
 </div>
-
-<nav aria-label="Page navigation example">
-    <ul class="justify-content-center pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
