@@ -42,11 +42,11 @@ productCtrl.deleteProduct = async (req, res) => {
 }
 
 productCtrl.renderProduct = async (req, res) => {
-    const category = await Category.findOne({'category': req.params.category})
-    if (category.category == req.params.category) {
+    const { category } = await Category.findOne({'category': req.params.category})
+    if ( category == req.params.category) {
         const products = await Product.find({'category': req.params.category}).lean()
         res.render('products/get-products', { products })
-    }else {
+    } else {
         res.send('esta pagina no existe')
     }
     

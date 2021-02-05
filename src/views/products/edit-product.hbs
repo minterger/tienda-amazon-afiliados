@@ -21,9 +21,15 @@
                 <label for="select" class="col-sm-2 col-form-label">Category</label>
                 <div class="col-sm-10">
                     <select class="form-select form-select-sm" id="select" name="category" aria-label=".form-select-sm example">
+                        
                         {{#each category}}
+                        {{#if (Compare category ../product.category)}}
+                        <option selected value="{{category}}">{{categoryName}}</option>
+                        {{else}}
                         <option value="{{category}}">{{categoryName}}</option>
+                        {{/if}}
                         {{/each}}
+                    
                     </select>
                 </div>
             </div>

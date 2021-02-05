@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
+const hbs = exphbs.create({})
 
 
 // inititializations
@@ -40,6 +41,15 @@ app.use((req, res, next) => {
     //ejemplo
     //res.locals.success_msg = req.flash('seccess_msg')
     next()
+})
+
+//helpers
+hbs.handlebars.registerHelper('Compare', function(category, categoryName) {
+    if (category == categoryName) {
+        return true
+    } else {
+        return false
+    }
 })
 
 //routes
