@@ -3,14 +3,6 @@ const Category = require('../models/Category')
 
 const productCtrl = {}
 
-productCtrl.addCategory = async (req, res) => {
-    const { categoryName, img_category} = req.body
-    const newCategory = new Category({categoryName, img_category})
-    newCategory.category = newCategory.categoryToLowerCase(categoryName)
-    await newCategory.save()
-    res.redirect('/new-product')
-}
-
 productCtrl.formProduct = async (req, res) => {
     const category = await Category.find().lean()
     res.render('products/new-product', { category })
@@ -42,7 +34,7 @@ productCtrl.deleteProduct = async (req, res) => {
 }
 
 productCtrl.renderProduct = async (req, res) => {
-    const { category } = await Category.findOne({'category': req.params.category})
+    const { category } = await Category.findOne({'category': req.params.category}).lean()
     if ( category == req.params.category) {
         const products = await Product.find({'category': req.params.category}).lean()
         res.render('products/get-products', { products })

@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const {
-    addCategory,
     formProduct,
     createNewProduct,
     editProduct,
@@ -9,9 +8,6 @@ const {
     renderProduct
 } = require('../controllers/product.controller')
 const router = Router()
-
-//añadir categoria
-router.post('/add-category', addCategory)
 
 //crear producto nuevo
 router.get('/new-product', formProduct)

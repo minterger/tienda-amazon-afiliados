@@ -6,10 +6,10 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
-const hbs = exphbs.create({})
 
 
 // inititializations
+const hbs = exphbs.create({})
 const app = express()
 
 // settings
@@ -55,6 +55,7 @@ hbs.handlebars.registerHelper('Compare', function(category, categoryName) {
 //routes
 app.use(require('./routes/index.routes'))
 app.use(require('./routes/product.routes'))
+app.use(require('./routes/category.routes'))
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
