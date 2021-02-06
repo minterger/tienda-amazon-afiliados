@@ -27,11 +27,11 @@ app.set('view engine', '.hbs')
 app.use(express.urlencoded({extended: false}))
 app.use(morgan('dev'))
 app.use(methodOverride('_method'))
-// app.use(session({
-//     secret: 'secret',
-//     resave: true,
-//     saveUninitialized: true
-// }))
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
 // app.use(passport.initialize())
 // app.use(passport.session())
 app.use(flash())
@@ -40,6 +40,7 @@ app.use(flash())
 app.use((req, res, next) => {
     //ejemplo
     //res.locals.success_msg = req.flash('seccess_msg')
+    res.locals.success_msg = req.flash('success_msg')
     next()
 })
 

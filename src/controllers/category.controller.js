@@ -14,6 +14,7 @@ categoryCtrl.addCategory = async (req, res) => {
     const newCategory = new Category({categoryName, img_category})
     newCategory.category = newCategory.categoryToLowerCase(categoryName)
     await newCategory.save()
+    req.flash('success_msg', 'Category Added Successfully')
     res.redirect('/new-product')
 }
 
@@ -25,6 +26,7 @@ categoryCtrl.deleteCategory = async (req, res) => {
         await Product.findByIdAndRemove(product[i]._id)
     }
     await Category.findByIdAndRemove(req.params.id)
+    req.flash('success_msg', 'Category Deleted Successfully')
     res.redirect('/')
 }
 
@@ -44,6 +46,7 @@ categoryCtrl.editCategory = async (req, res) => {
         await Product.findByIdAndUpdate(product[i]._id, { category })
     }
     await Category.findByIdAndUpdate(req.params.id, {categoryName, img_category, category })
+    req.flash('success_msg', 'Category Edited Successfully')
     res.redirect('/')
 }
 
