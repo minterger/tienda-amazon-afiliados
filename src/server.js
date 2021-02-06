@@ -54,8 +54,8 @@ hbs.handlebars.registerHelper('Compare', function(category, categoryName) {
 
 //routes
 app.use(require('./routes/index.routes'))
-app.use(require('./routes/product.routes'))
 app.use(require('./routes/category.routes'))
+app.use(require('./routes/product.routes'))
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))

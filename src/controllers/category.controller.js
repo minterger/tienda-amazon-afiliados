@@ -3,6 +3,11 @@ const Product = require('../models/Product')
 
 const categoryCtrl = {}
 
+//formulario para añadir categoria
+categoryCtrl.formCategory = (req, res) => {
+    res.render('category/add-category')
+}
+
 //añadir categoria
 categoryCtrl.addCategory = async (req, res) => {
     const { categoryName, img_category} = req.body
@@ -20,6 +25,25 @@ categoryCtrl.deleteCategory = async (req, res) => {
         await Product.findByIdAndRemove(product[i]._id)
     }
     await Category.findByIdAndRemove(req.params.id)
+    res.redirect('/')
+}
+
+//editar categoria
+categoryCtrl.formEditCategory = async (req, res) => {
+    const category = await Category.findById(req.params.id).lean()
+    res.render('category/edit-category', {category})
+}
+
+//guardar lo editado
+categoryCtrl.editCategory = async (req, res) => {
+    const oldCategory = await Category.findById(req.params.id)
+    const { categoryName, img_category} = req.body
+    const category = categoryName.toLowerCase()
+    const product = await Product.find({'category': oldCategory.category})
+    for (i = 0; i < product.length; i++) {
+        await Product.findByIdAndUpdate(product[i]._id, { category })
+    }
+    await Category.findByIdAndUpdate(req.params.id, {categoryName, img_category, category })
     res.redirect('/')
 }
 

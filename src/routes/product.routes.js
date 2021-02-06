@@ -25,6 +25,6 @@ router.put('/edit-product/:id', endEditProduct)
 router.delete('/delete-product/:id', deleteProduct)
 
 //renderizar producto segun su categoria
-router.get('/product/:category', renderProduct)
+router.get('/:category', renderProduct)
 
 module.exports = router

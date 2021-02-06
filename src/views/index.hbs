@@ -6,14 +6,15 @@
             <div class="card-body">
                     <h4 class="card-title d-flex justify-content-center mb-3">{{categoryName}}</h4>
                     <div class="d-grid gap-2">
-                        <a href="/product/{{category}}" class="btn btn-primary">View</a>
+                        <a href="/{{category}}" class="btn btn-primary">View</a>
                     </div>
             </div>
-            <div class="card-footer d-flex justify-content-end">
+            <div class="card-footer text-muted d-flex justify-content-between align-content-center">
                 <form action="/deleteCategory/{{_id}}?_method=delete" method="POST">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                 </form>
+                <a class="btn btn-outline-success btn-sm" href="/edit-category/{{_id}}"><i class='bx bx-edit'></i></a>
             </div>
         </div>
     </div>
