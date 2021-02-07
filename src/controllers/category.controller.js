@@ -12,7 +12,7 @@ categoryCtrl.formCategory = (req, res) => {
 categoryCtrl.addCategory = async (req, res) => {
     const { categoryName, img_category} = req.body
     const newCategory = new Category({categoryName, img_category})
-    newCategory.category = newCategory.categoryToLowerCase(categoryName)
+    newCategory.category = categoryName.toLowerCase()
     await newCategory.save()
     req.flash('success_msg', 'Category Added Successfully')
     res.redirect('/new-product')

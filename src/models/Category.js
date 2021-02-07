@@ -8,8 +8,4 @@ const categorySchema = new Schema({
     timestamps: true
 });
 
-categorySchema.methods.categoryToLowerCase = (category) => {
-    return category.toLowerCase()
-}
-
 module.exports = model('Category', categorySchema)

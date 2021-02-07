@@ -55,6 +55,7 @@ hbs.handlebars.registerHelper('Compare', function(category, categoryName) {
 
 //routes
 app.use(require('./routes/index.routes'))
+app.use(require('./routes/users.routes'))
 app.use(require('./routes/category.routes'))
 app.use(require('./routes/product.routes'))
 
