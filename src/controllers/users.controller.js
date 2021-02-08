@@ -2,8 +2,13 @@ const User = require('../models/User')
 
 const userCtrl = {}
 
-userCtrl.loginForm = (req, res) => {
-    res.render('users/login')
+userCtrl.loginForm = async (req, res) => {
+    const users = await User.find()
+    if (users.length != 0) {
+        res.render('users/login')
+    } else {
+        res.render('users/register')
+    }
 }
 
 userCtrl.login = (req, res) => {
@@ -14,7 +19,7 @@ userCtrl.registerForm = (req, res) => {
     res.render('users/register')
 }
 
-userCtrl.register = (req, res) => {
+userCtrl.register = async (req, res) => {
     const errors = []
 
     const { name, email, password, confirmPassword } = req.body
@@ -28,7 +33,17 @@ userCtrl.register = (req, res) => {
     if (errors.length > 0) {
         res.render('users/register', {errors, name, email})
     } else {
-        res.send('register successfully')
+        const emailUser = await User.findOne({email})
+        if (emailUser) {
+            errors.push({text: 'The email is already exist'})
+            res.render('users/register', {errors, name, email})
+        } else {
+            const newUser = new User({ name, email, password })
+            newUser.password = await newUser.encryptPassword(password)
+            await newUser.save()
+            req.flash('success_msg', 'User successfully registered')
+            res.redirect('/')
+        }
     }
 }
 

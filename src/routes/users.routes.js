@@ -12,9 +12,9 @@ router.get('/login', loginForm)
 
 router.post('/login', login)
 
-router.get('/register', registerForm)
+router.get('/new-user', registerForm)
 
-router.post('/register', register)
+router.post('/new-user', register)
 
 router.get('/logout', logout)
 
