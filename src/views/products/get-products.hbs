@@ -6,8 +6,9 @@
             <div class="card-body">
                 <h4 class="card-title">{{product_name}}</h4>
                 <p>{{description}}</p>
-                <a href="#" class="btn btn-primary">Buy ${{price}}</a>
+                <a href="{{product_link}}" class="btn btn-primary">Buy ${{price}}</a>
             </div>
+            {{#if ../user}}
             <div class="card-footer text-muted d-flex justify-content-between align-content-center">
                 <form action="/delete-product/{{_id}}?_method=delete" method="POST">
                     <input type="hidden" name="_method" value="delete">
@@ -15,6 +16,7 @@
                 </form>
                 <a class="btn btn-outline-success btn-sm" href="/edit-product/{{_id}}"><i class='bx bx-edit'></i></a>
             </div>
+            {{/if}}
         </div>
     </div>
     {{/each}}

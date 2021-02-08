@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const passport = require('passport')
 
 const userCtrl = {}
 
@@ -11,9 +12,11 @@ userCtrl.loginForm = async (req, res) => {
     }
 }
 
-userCtrl.login = (req, res) => {
-    res.send('entrando')
-}
+userCtrl.login = passport.authenticate('local', {
+    failureRedirect: '/login',
+    successRedirect: '/',
+    failureFlash: true
+})
 
 userCtrl.registerForm = (req, res) => {
     res.render('users/register')
@@ -22,8 +25,10 @@ userCtrl.registerForm = (req, res) => {
 userCtrl.register = async (req, res) => {
     const errors = []
 
-    const { name, email, password, confirmPassword } = req.body
+    const { name, userEmail, password, confirmPassword } = req.body
     
+    const email = userEmail.toLowerCase()
+
     if (password != confirmPassword) {
         errors.push({text: 'Passwords do not match'})
     }
@@ -36,7 +41,7 @@ userCtrl.register = async (req, res) => {
         const emailUser = await User.findOne({email})
         if (emailUser) {
             errors.push({text: 'The email is already exist'})
-            res.render('users/register', {errors, name, email})
+            res.render('users/register', {errors, name, userEmail})
         } else {
             const newUser = new User({ name, email, password })
             newUser.password = await newUser.encryptPassword(password)
@@ -48,7 +53,9 @@ userCtrl.register = async (req, res) => {
 }
 
 userCtrl.logout = (req, res) => {
-    res.send('logout')
+    req.logout()
+    req.flash('success_msg', 'You are logged out now')
+    res.redirect('/')
 }
 
 module.exports = userCtrl

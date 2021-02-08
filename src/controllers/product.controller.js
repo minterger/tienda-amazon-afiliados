@@ -9,8 +9,8 @@ productCtrl.formProduct = async (req, res) => {
 }
 
 productCtrl.createNewProduct = async (req, res) => {
-    const { product_name, img_link, description, category, price } = req.body
-    const newProduct = new Product({ product_name, img_link, description, category, price})
+    const { product_name, product_link, img_link, description, category, price } = req.body
+    const newProduct = new Product({ product_name, product_link, img_link, description, category, price})
     await newProduct.save()
     req.flash('success_msg', 'Note Added Successfully')
     res.redirect('/')
@@ -23,8 +23,8 @@ productCtrl.editProduct = async (req, res) => {
 }
 
 productCtrl.endEditProduct = async (req, res) => {
-    const { product_name, img_link, description, category, price } = req.body
-    await Product.findByIdAndUpdate(req.params.id, { product_name, img_link, description, category, price })
+    const { product_name, product_link, img_link, description, category, price } = req.body
+    await Product.findByIdAndUpdate(req.params.id, { product_name, product_link, img_link, description, category, price })
     req.flash('success_msg', 'Product edited successfully')
     res.redirect('/')
 }

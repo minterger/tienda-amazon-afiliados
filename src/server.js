@@ -11,6 +11,7 @@ const passport = require('passport')
 // inititializations
 const hbs = exphbs.create({})
 const app = express()
+require('./config/passport')
 
 // settings
 app.set('port', process.env.PORT || 3000)
@@ -32,8 +33,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 //gloval variables
@@ -41,6 +42,8 @@ app.use((req, res, next) => {
     //ejemplo
     //res.locals.success_msg = req.flash('seccess_msg')
     res.locals.success_msg = req.flash('success_msg')
+    res.locals.error = req.flash('error')
+    res.locals.user = req.user || null
     next()
 })
 
