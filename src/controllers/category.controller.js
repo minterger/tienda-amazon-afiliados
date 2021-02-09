@@ -10,12 +10,19 @@ categoryCtrl.formCategory = (req, res) => {
 
 //añadir categoria
 categoryCtrl.addCategory = async (req, res) => {
-    const { categoryName, img_category} = req.body
-    const newCategory = new Category({categoryName, img_category})
-    newCategory.category = categoryName.toLowerCase()
-    await newCategory.save()
-    req.flash('success_msg', 'Category Added Successfully')
-    res.redirect('/new-product')
+    const errors = []
+    const { categoryName, img_category } = req.body
+    const category = categoryName.toLowerCase()
+    const matchCategory = await Category.findOne({category})
+    if (!matchCategory) {
+        const newCategory = new Category({categoryName, category, img_category})
+        await newCategory.save()
+        req.flash('success_msg', 'Category Added Successfully')
+        res.redirect('/new-product')
+    } else {
+        errors.push({text: 'This category is already exist'})
+        res.render('category/add-category', {errors ,categoryName, img_category})
+    }
 }
 
 //eliminar categoria y todos los productos que contiene esa categoria
@@ -32,22 +39,29 @@ categoryCtrl.deleteCategory = async (req, res) => {
 
 //editar categoria
 categoryCtrl.formEditCategory = async (req, res) => {
-    const category = await Category.findById(req.params.id).lean()
-    res.render('category/edit-category', {category})
+    const { _id, categoryName, img_category} = await Category.findById(req.params.id).lean()
+    res.render('category/edit-category', { _id, categoryName, img_category})
 }
 
 //guardar lo editado
 categoryCtrl.editCategory = async (req, res) => {
+    const errors = []
     const oldCategory = await Category.findById(req.params.id)
     const { categoryName, img_category} = req.body
     const category = categoryName.toLowerCase()
-    const product = await Product.find({'category': oldCategory.category})
-    for (i = 0; i < product.length; i++) {
-        await Product.findByIdAndUpdate(product[i]._id, { category })
+    const matchCategory = await Category.findOne({category})
+    if (!matchCategory) {
+        const product = await Product.find({'category': oldCategory.category})
+        for (i = 0; i < product.length; i++) {
+            await Product.findByIdAndUpdate(product[i]._id, { category })
+        }
+        await Category.findByIdAndUpdate(req.params.id, {categoryName, img_category, category })
+        req.flash('success_msg', 'Category Edited Successfully')
+        res.redirect('/')
+    } else {
+        errors.push({text: 'This category is already exist'})
+        res.render('category/edit-category', { errors, _id: oldCategory._id, categoryName, img_category})
     }
-    await Category.findByIdAndUpdate(req.params.id, {categoryName, img_category, category })
-    req.flash('success_msg', 'Category Edited Successfully')
-    res.redirect('/')
 }
 
 module.exports = categoryCtrl

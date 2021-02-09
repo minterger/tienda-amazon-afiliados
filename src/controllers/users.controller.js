@@ -36,7 +36,7 @@ userCtrl.register = async (req, res) => {
         errors.push({text: 'Passwords must be at least 4 characters'})
     }
     if (errors.length > 0) {
-        res.render('users/register', {errors, name, email})
+        res.render('users/register', {errors, name, userEmail})
     } else {
         const emailUser = await User.findOne({email})
         if (emailUser) {

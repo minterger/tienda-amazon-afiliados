@@ -12,7 +12,7 @@ productCtrl.createNewProduct = async (req, res) => {
     const { product_name, product_link, img_link, description, category, price } = req.body
     const newProduct = new Product({ product_name, product_link, img_link, description, category, price})
     await newProduct.save()
-    req.flash('success_msg', 'Note Added Successfully')
+    req.flash('success_msg', 'Product added successfully')
     res.redirect('/')
 }
 
