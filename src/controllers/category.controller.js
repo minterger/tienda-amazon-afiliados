@@ -29,7 +29,7 @@ categoryCtrl.addCategory = async (req, res) => {
 categoryCtrl.deleteCategory = async (req, res) => {
     const category = await Category.findById(req.params.id)
     const product = await Product.find({'category': category.category})
-    for (i = 0; i < product.length; i++) {
+    for (let i = 0; i < product.length; i++) {
         await Product.findByIdAndRemove(product[i]._id)
     }
     await Category.findByIdAndRemove(req.params.id)
@@ -50,9 +50,9 @@ categoryCtrl.editCategory = async (req, res) => {
     const { categoryName, img_category} = req.body
     const category = categoryName.toLowerCase()
     const matchCategory = await Category.findOne({category})
-    if (!matchCategory) {
+    if (!matchCategory || oldCategory.category == category) {
         const product = await Product.find({'category': oldCategory.category})
-        for (i = 0; i < product.length; i++) {
+        for (let i = 0; i < product.length; i++) {
             await Product.findByIdAndUpdate(product[i]._id, { category })
         }
         await Category.findByIdAndUpdate(req.params.id, {categoryName, img_category, category })

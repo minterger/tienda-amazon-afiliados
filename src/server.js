@@ -9,7 +9,6 @@ const passport = require('passport')
 
 
 // inititializations
-const hbs = exphbs.create({})
 const app = express()
 require('./config/passport')
 
@@ -49,13 +48,7 @@ app.use((req, res, next) => {
 })
 
 //helpers
-hbs.handlebars.registerHelper('Compare', function(category, categoryName) {
-    if (category == categoryName) {
-        return true
-    } else {
-        return false
-    }
-})
+require('./helpers/hbs')
 
 //routes
 app.use(require('./routes/index.routes'))
