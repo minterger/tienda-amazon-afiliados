@@ -42,9 +42,11 @@ productCtrl.renderProduct = async (req, res) => {
         const products = await Product.paginate({'category': req.params.category}, {
             lean: true,
             page,
-            limit: 12
+            limit: 8
         })
-        // console.log(products)
+        if (products.page > products.totalPages) {
+            res.redirect('/' + category)
+        }
         res.render('products/get-products', { products })
     } else {
         res.redirect('/')
