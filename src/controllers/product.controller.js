@@ -37,12 +37,14 @@ productCtrl.deleteProduct = async (req, res) => {
 
 productCtrl.renderProduct = async (req, res) => {
     const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 8
     const { category } = await Category.findOne({'category': req.params.category}).lean() || "null"
     if ( category == req.params.category) {
         const products = await Product.paginate({'category': req.params.category}, {
             lean: true,
             page,
-            limit: 8
+            limit,
+            sort: {updatedAt: -1}
         })
         if (products.page > products.totalPages) {
             res.redirect('/' + category)
