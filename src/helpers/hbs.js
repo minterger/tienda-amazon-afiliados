@@ -8,6 +8,10 @@ hbs.handlebars.registerHelper('Compare', (category, categoryName) => {
     return false
 })
 
+hbs.handlebars.registerHelper('username', (user) => {
+    return user.name
+})
+
 hbs.handlebars.registerHelper('pagination', (totalPages) => {
     if (totalPages <= 1) {
         return false
