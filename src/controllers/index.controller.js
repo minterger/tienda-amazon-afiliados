@@ -7,4 +7,8 @@ indexCtrl.renderIndex = async (req, res) => {
     res.render('index', { category })
 }
 
+indexCtrl.renderAbout = (req, res) => {
+    res.render('about')
+}
+
 module.exports = indexCtrl
