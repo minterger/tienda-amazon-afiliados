@@ -23,16 +23,26 @@ productCtrl.editProduct = async (req, res) => {
 }
 
 productCtrl.endEditProduct = async (req, res) => {
-    const { product_name, product_link, img_link, description, category, price } = req.body
-    await Product.findByIdAndUpdate(req.params.id, { product_name, product_link, img_link, description, category, price })
-    req.flash('success_msg', 'Product edited successfully')
-    res.redirect('/')
+    const { product_name, product_link, img_link, description, category, price } = req.body;
+    try {
+        await Product.findByIdAndUpdate(req.params.id, { product_name, product_link, img_link, description, category, price })
+        req.flash('success_msg', 'Product edited successfully')
+        res.redirect('/')
+    } catch (error) {
+        req.flash('error_msg', 'Error');
+        res.redirect('/');
+    }
 }
 
 productCtrl.deleteProduct = async (req, res) => {
-    await Product.findByIdAndRemove(req.params.id)
-    req.flash('success_msg', 'Product Deleted Successfully')
-    res.redirect('/')
+    try {
+        await Product.findByIdAndRemove(req.params.id)
+        req.flash('success_msg', 'Product Deleted Successfully')
+        res.redirect('/')
+    } catch (error) {
+        req.flash('error_msg', 'Error');
+        res.redirect('/');
+    }
 }
 
 productCtrl.renderProduct = async (req, res) => {
