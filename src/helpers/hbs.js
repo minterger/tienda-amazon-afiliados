@@ -40,15 +40,15 @@ hbs.handlebars.registerHelper('paginate', (totalPages, page, category) => {
     }
     for (; i <= (page + 1); i++) {
         if (i == page && i !== totalPages) {
-            li.push('<li class="page-item disabled"><a class="page-link" href="/' + category + '?page=' + i + '">' + i + '</a></li>')
+            li.push(`<li class="page-item disabled"><a class="page-link" href="/${category}?page=${i}">${i}</a></li>`)
         } else if (i !== totalPages) {
-            li.push('<li class="page-item"><a class="page-link" href="/' + category + '?page=' + i + '">' + i + '</a></li>')
+            li.push(`<li class="page-item"><a class="page-link" href="/${category}?page=${i}">${i}</a></li>`)
         } else {
             if (i == page) {
-                li.push('<li class="page-item disabled"><a class="page-link" href="/' + category + '?page=' + i + '">' + i + '</a></li>')
+                li.push(`<li class="page-item disabled"><a class="page-link" href="/${category}?page=${i}">${i}</a></li>`)
                 break
             }
-            li.push('<li class="page-item"><a class="page-link" href="/' + category + '?page=' + i + '">' + i + '</a></li>')
+            li.push(`<li class="page-item"><a class="page-link" href="/${category}?page=${i}">${i}</a></li>`)
             break
         }
     }
